@@ -44,22 +44,22 @@ def categorize_email(subject, body, from_adressat):
     text = (subject + " " + body).lower()
     from_adressat = from_adressat.lower()
 
-    if any(word in text for word in ["выиграли", "подтвердите личность", "аккаунт будет заблокирован"]):
+    if all(word in text for word in ["после", "обновления"]):
+        return "Проблема с ПО после обновления"
+
+    if any(word in text for word in ["больничный", "отпуск", "izmenenie grafika raboty"]):
+        return "HR или не IT"
+
+    if any(word in text for word in ["выиграли", "подтвердите личность", "аккаунт будет заблокирован", "розыгрыша"]):
         return "Фишинг или спам"
 
     if any(word in text for word in ["ремонт", "гарнитура", "ноутбук", "принтер", "сканер", "мышь"]):
         return "Оборудование"
 
-    if any(word in text for word in ["выдать доступ", "нужны права", "новый сотрудник"]):
-        return "Запрос доступа"
-
-    if any(word in text for word in ["alerts", "alert"]):
+    if any(word in text for word in ["alerts", "alert", "мониторинга"]):
         return "Мониторинг или оповещение"
 
-    if any(word in text for word in ["счёт", "счет", "акт", "договор", "оплата", "согласование", "клиент"]):
-        return "Работа с клиентами"
-
-    if any(word in text for word in ["работа остановлена", "ошибка 500", "критичный инцидент", "не могу войти", "не работает"]):
+    if any(word in text for word in ["работа остановлена", "ошибка 500", "инцидент", "не могу войти", "срочная верификация", "истекает", "проблема не устранена", "пробовали перезайти"]):
         return "Критический инцидент"
 
     if any(word in text for word in ["дайджест", "выпуск"]):
@@ -68,11 +68,11 @@ def categorize_email(subject, body, from_adressat):
     if any(word in text for word in ["созвон", "демо", "встретиться"]):
         return "Встреча или созвон"
 
-    if any(word in text for word in ["больничный", "отпуск"]):
-        return "HR или не IT"
-    
-    if any(word in text for word in ["после обновления", "обновления"]):
-        return "Проблема с ПО после обновления"
+    if any(word in text for word in ["выдать доступ", "нужны права", "новый сотрудник", "доступ"]):
+        return "Запрос доступа"
+
+    if any(word in text for word in ["счёт", "счет", "акт", "договор", "оплата", "согласование", "клиент"]):
+        return "Работа с клиентами"
 
 
     return "Прочее"
