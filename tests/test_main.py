@@ -53,7 +53,7 @@ def test_wrong_extension():
     test_file = main.inp / "test_wrong_extension.pdf"
     test_file.write_text("test", encoding="utf-8")
     main.process_emails()
-    result_file = main.out / "Некорректные письма" / "test_wrong_extension.pdf"
+    result_file = main.out / "Неправильное расширение файла" / "test_wrong_extension.pdf"
     assert result_file.exists()
     test_file.unlink()
     result_file.unlink()
