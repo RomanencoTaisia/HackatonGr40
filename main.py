@@ -53,9 +53,6 @@ def categorize_email(subject, body, from_adressat):
     if any(word in text for word in ["выдать доступ", "нужны права", "новый сотрудник"]):
         return "Запрос доступа"
 
-    if any(word in text for word in ["после обновления", "обновления"]):
-        return "Проблема с ПО после обновления"
-
     if any(word in text for word in ["alerts", "alert"]):
         return "Мониторинг или оповещение"
 
@@ -73,6 +70,10 @@ def categorize_email(subject, body, from_adressat):
 
     if any(word in text for word in ["больничный", "отпуск"]):
         return "HR или не IT"
+    
+    if any(word in text for word in ["после обновления", "обновления"]):
+        return "Проблема с ПО после обновления"
+
 
     return "Прочее"
 
