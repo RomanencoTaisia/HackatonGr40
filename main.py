@@ -66,7 +66,7 @@ def categorize_email(subject, body, from_adressat):
         return "Мониторинг или оповещение"
 
     if any(word in text for word in ["счёт", "счет", "акт", "договор", "оплата"]):
-        return "Документооборот"
+        return "Работа с клиентами"
 
     if any(word in text for word in ["дайджест", "выпуск"]):
         return "Корпоративная рассылка"
