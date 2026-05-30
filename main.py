@@ -43,7 +43,7 @@ def categorize_email(subject, body, from_adressat):
     text = (subject + " " + body).lower()
     from_adressat = from_adressat.lower()
 
-    if any(word in text for word in ["выиграли", "iphone", "подтвердите личность", "аккаунт будет заблокирован"]):
+    if any(word in text for word in ["выиграли", "подтвердите личность", "аккаунт будет заблокирован"]):
         return "Фишинг или спам"
 
     if any(word in text for word in ["работа остановлена", "ошибка 500", "критичный инцидент"]):
