@@ -40,7 +40,6 @@ Subject: Ошибка 500
     assert from_adressat == "user@test.ru"
     assert "Сервис не работает" in body
 
-
 def test_empty_email():
     empty_file = main.inp / "empty_test.txt"
     empty_file.write_text("", encoding="utf-8")
@@ -48,7 +47,7 @@ def test_empty_email():
     result_file = main.out / "Некорректные письма" / "empty_test.txt"
     assert result_file.exists()
     empty_file.unlink()
-
+    result_file.unlink()
 
 def test_wrong_extension():
     test_file = main.inp / "test_wrong_extension.pdf"
