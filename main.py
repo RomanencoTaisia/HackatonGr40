@@ -72,10 +72,10 @@ def categorize_email(subject, body, from_adressat):
         return "Запрос доступа"
 
     if any(word in text for word in ["счёт", "счет", "акт", "договор", "оплата", "согласование", "клиент"]):
-        return "Работа с клиентами"
+        return "Работа с клиентами и документами"
 
 
-    return "Прочее"
+    return "Непонятная переписка"
 
 
 def process_emails():
