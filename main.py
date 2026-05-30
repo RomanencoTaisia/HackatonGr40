@@ -119,20 +119,6 @@ def process_emails():
             continue
 
         subject, body, from_adressat = parse_email(text)
-
-        if from_adressat == "":
-            category = "Некорректные письма"
-
-            category_folder = out / category
-            category_folder.mkdir(exist_ok=True)
-
-            new_file = category_folder / email_file.name
-            new_file.write_text(text, encoding="utf-8")
-
-            pisima_ineachcategoria[category] = pisima_ineachcategoria.get(category, 0) + 1
-            print(f"{email_file.name} -> {category}")
-            continue
-
         category = categorize_email(subject, body, from_adressat)
 
         category_folder = out / category
