@@ -89,7 +89,24 @@ def process_emails():
 
     pisima_ineachcategoria = {}
 
-    for email_file in inp.glob("*.txt"):
+    for email_file in inp.iterdir():
+        if not email_file.is_file():
+            continue
+
+        if email_file.suffix != ".txt":
+            category = "Неправильное расширение файла"
+
+            category_folder = out / category
+            category_folder.mkdir(exist_ok=True)
+
+            new_file = category_folder / email_file.name
+            new_file.write_bytes(email_file.read_bytes())
+
+            pisima_ineachcategoria[category] = pisima_ineachcategoria.get(category, 0) + 1
+
+            print(f"{email_file.name} -> {category}")
+            continue
+
         text = read_email(email_file)
 
         subject, body, from_adressat = parse_email(text)
@@ -106,6 +123,7 @@ def process_emails():
         print(f"{email_file.name} -> {category}")
 
     return pisima_ineachcategoria
+
 
 
 def main():
