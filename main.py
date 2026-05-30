@@ -47,27 +47,23 @@ def categorize_email(subject, body, from_adressat):
     if any(word in text for word in ["выиграли", "подтвердите личность", "аккаунт будет заблокирован"]):
         return "Фишинг или спам"
 
-    if any(word in text for word in ["работа остановлена", "ошибка 500", "критичный инцидент"]):
-        return "Критический инцидент"
-
     if any(word in text for word in ["ремонт", "гарнитура", "ноутбук", "принтер", "сканер", "мышь"]):
         return "Оборудование"
 
     if any(word in text for word in ["выдать доступ", "нужны права", "новый сотрудник"]):
         return "Запрос доступа"
 
-    if "после обновления" in text:
+    if any(word in text for word in ["после обновления", "обновления"]):
         return "Проблема с ПО после обновления"
 
-    if any(word in text for word in [
-        "alerts@", "monitoring@", "zabbix@", "prometheus@", 
-        "nagios@", "grafana@", "noreply@", "alert@",
-        "monit@", "sensu@", "datadog@"
-    ]):
+    if any(word in text for word in ["alerts", "alert"]):
         return "Мониторинг или оповещение"
 
-    if any(word in text for word in ["счёт", "счет", "акт", "договор", "оплата", "согласование"]):
+    if any(word in text for word in ["счёт", "счет", "акт", "договор", "оплата", "согласование", "клиент"]):
         return "Работа с клиентами"
+
+    if any(word in text for word in ["работа остановлена", "ошибка 500", "критичный инцидент", "не могу войти", "не работает"]):
+        return "Критический инцидент"
 
     if any(word in text for word in ["дайджест", "выпуск"]):
         return "Корпоративная рассылка"
@@ -106,10 +102,37 @@ def process_emails():
 
             print(f"{email_file.name} -> {category}")
             continue
-
+        
         text = read_email(email_file)
 
+        if text.strip() == "":
+            category = "Некорректные письма"
+
+            category_folder = out / category
+            category_folder.mkdir(exist_ok=True)
+
+            new_file = category_folder / email_file.name
+            new_file.write_text(text, encoding="utf-8")
+
+            pisima_ineachcategoria[category] = pisima_ineachcategoria.get(category, 0) + 1
+            print(f"{email_file.name} -> {category}")
+            continue
+
         subject, body, from_adressat = parse_email(text)
+
+        if from_adressat == "":
+            category = "Некорректные письма"
+
+            category_folder = out / category
+            category_folder.mkdir(exist_ok=True)
+
+            new_file = category_folder / email_file.name
+            new_file.write_text(text, encoding="utf-8")
+
+            pisima_ineachcategoria[category] = pisima_ineachcategoria.get(category, 0) + 1
+            print(f"{email_file.name} -> {category}")
+            continue
+
         category = categorize_email(subject, body, from_adressat)
 
         category_folder = out / category
