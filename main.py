@@ -1,3 +1,4 @@
+import shutil
 import logging
 from pathlib import Path
 
@@ -81,7 +82,10 @@ def categorize_email(subject, body, from_adressat):
 
 
 def process_emails():
-    out.mkdir(exist_ok=True)
+    if out.exists():
+        shutil.rmtree(out)
+
+    out.mkdir()
 
     pisima_ineachcategoria = {}
 
