@@ -201,5 +201,6 @@ def print_pedestal(statistics):
 
 if __name__ == "__main__":
     main()
-    save_statistics(process_emails())   
-    print_pedestal(process_emails())
+    process=process_emails()
+    save_statistics(process)   
+    print_pedestal(process)
