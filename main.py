@@ -158,7 +158,46 @@ def save_statistics(statistics):
         for category, count in statistics.items():
             percent = count / total * 100 if total > 0 else 0
             file.write(f"{category}: {count} писем, {percent:.1f}%\n")
+            
+def print_pedestal(statistics):
+    top_categories = sorted(statistics.items(), key=lambda item: item[1], reverse=True)[:3]
+
+    if len(top_categories) < 3:
+        print("\nНедостаточно категорий для пьедестала")
+        return
+
+    first_category, first_count = top_categories[0]
+    second_category, second_count = top_categories[1]
+    third_category, third_count = top_categories[2]
+
+    print("\n" + "=" * 70)
+    print(" " * 25 + "ПЬЕДЕСТАЛ КАТЕГОРИЙ")
+    print("=" * 70)
+
+    print(" " * 30 + " O ")
+    print(" " * 30 + "/|\\")
+    print(" " * 30 + "/ \\")
+    print(" " * 25 + f"{first_category}")
+    print(" " * 25 + f"{first_count} писем")
+    print(" " * 24 + "+--------------+")
+    print(" " * 24 + "|   1 МЕСТО   |")
+    print(" " * 24 + "|              |")
+    print(" " * 24 + "|              |")
+
+    print(" " * 8 + " O " + " " * 38 + " O ")
+    print(" " * 8 + "/|\\" + " " * 38 + "/|\\")
+    print(" " * 8 + "/ \\" + " " * 38 + "/ \\")
+    print(" " * 2 + f"{second_category[:22]:22}" + " " * 13 + f"{third_category[:22]:22}")
+    print(" " * 2 + f"{second_count} писем" + " " * 33 + f"{third_count} писем")
+    print(" " * 2 + "+--------------+" + " " * 20 + "+--------------+")
+    print(" " * 2 + "|   2 МЕСТО   |" + " " * 20 + "|   3 МЕСТО   |")
+    print(" " * 2 + "|              |" + " " * 20 + "|              |")
+    print(" " * 2 + "|              |" + " " * 20 + "|              |")
+    print(" " * 2 + "|              |" + " " * 20 + "|              |")
+
+    print("=" * 70)      
 
 if __name__ == "__main__":
     main()
     save_statistics(process_emails())   
+    print_pedestal(process_emails())
