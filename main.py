@@ -1,5 +1,6 @@
 import shutil
 import logging
+import song
 from pathlib import Path
 
 inp = Path("data/inbox")
@@ -160,6 +161,7 @@ def save_statistics(statistics):
             file.write(f"{category}: {count} писем, {percent:.1f}%\n")
             
 def print_pedestal(statistics):
+    song.play_award_sound()
     top_categories = sorted(statistics.items(), key=lambda item: item[1], reverse=True)[:3]
 
     if len(top_categories) < 3:
