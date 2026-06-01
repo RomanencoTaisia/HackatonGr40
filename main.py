@@ -147,6 +147,18 @@ def main():
 
     print("Обработка завершена")
 
+def save_statistics(statistics):
+    reportingfile =  out / "report.txt"
+    total = sum(statistics.values())
+
+    with reportingfile.open("w", encoding="utf-8") as file:
+        file.write("Итоговая статистика корпоративного почтового ящика \n")
+        file.write(f"Всего писем: {total}\n\n")
+
+        for category, count in statistics.items():
+            percent = count / total * 100 if total > 0 else 0
+            file.write(f"{category}: {count} писем, {percent:.1f}%\n")
 
 if __name__ == "__main__":
     main()
+    save_statistics(process_emails())   
